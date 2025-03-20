@@ -589,3 +589,10 @@ if($botState['cartToCartAutoAcceptState']=="on"){
         editKeys(json_encode(['inline_keyboard'=>[[['text'=>"خودکار تأیید شد",'callback_data'=>"wizwizch"]]]]), $payInfo['message_id'], $payInfo['chat_id']);
     }
 }
+// دستور فعال/غیرفعال کردن بازی
+if ($isAdmin && strpos($message, '/togglegame') === 0) {
+    $stmt = $conn->prepare("UPDATE game_settings SET game_enabled = NOT game_enabled WHERE id = 1");
+    $stmt->execute();
+    $status = $conn->query("SELECT game_enabled FROM game_settings")->fetchColumn() ? 'فعال' : 'غیرفعال';
+    sendMessage($chatId, "وضعیت بازی: $status ✅");
+}
