@@ -6,6 +6,29 @@ if($connection->connect_error){
     exit("error " . $connection->connect_error);  
 }
 $connection->set_charset("utf8mb4");
+// اضافه کردن جدول games
+$sql = "CREATE TABLE IF NOT EXISTS games (
+    game_id VARCHAR(36) PRIMARY KEY,
+    player1_id INT NOT NULL,
+    player2_id INT DEFAULT NULL,
+    bet_amount INT NOT NULL,
+    player1_choice INT DEFAULT NULL,
+    player2_choice INT DEFAULT NULL,
+    winning_number INT DEFAULT NULL,
+    status ENUM('waiting', 'active', 'completed') DEFAULT 'waiting',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+$conn->exec($sql);
+
+// جدول تنظیمات بازی
+$sql = "CREATE TABLE IF NOT EXISTS game_settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    game_enabled BOOLEAN DEFAULT TRUE
+)";
+$conn->exec($sql);
+
+// مقداردهی اولیه تنظیمات
+$conn->exec("INSERT IGNORE INTO game_settings (id) VALUES (1)");
 
 $connection->query("CREATE TABLE `chats` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
