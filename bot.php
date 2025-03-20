@@ -3,7 +3,64 @@ include_once 'config.php';
 check();
 
 $robotState = $botState['botState']??"on";
+// در بخش تنظیمات اولیه
+require_once 'game.php';
+$gameHandler = new GameHandler($conn);
 
+// دستور شروع بازی
+if (strpos($message, '/startgame') === 0) {
+    $minimumBet = 500;
+    // منطق بررسی موجودی و حداقل شرط
+    sendMessage($chatId, "💰 لطفا مبلغ شرط را وارد کنید (حداقل $minimumBet تومان):");
+    // ذخیره وضعیت کاربر در سشن
+}
+
+// پردازش مبلغ شرط
+elseif (isset($_SESSION['awaiting_bet'])) {
+    unset($_SESSION['awaiting_bet']);
+    $bet = (int)$message;
+    if ($bet >= 500) {
+        $gameId = $gameHandler->createGame($userId, $bet);
+        // ارسال کیبورد شیشه‌ای
+        sendMessage($chatId, "🎲 عدد خود را انتخاب کنید:", [
+            'inline_keyboard' => [
+                [
+                    ['text' => '1 🔮', 'callback_data' => 'game_'.$gameId.'_1'],
+                    ['text' => '2 🔮', 'callback_data' => 'game_'.$gameId.'_2']
+                ],
+                [
+                    ['text' => '3 🔮', 'callback_data' => 'game_'.$gameId.'_3'],
+                    ['text' => '4 🔮', 'callback_data' => 'game_'.$gameId.'_4']
+                ],
+                [
+                    ['text' => '5 🔮', 'callback_data' => 'game_'.$gameId.'_5'],
+                    ['text' => '6 🔮', 'callback_data' => 'game_'.$gameId.'_6']
+                ]
+            ]
+        ]);
+    }
+}
+
+// پردازش انتخاب کاربر
+elseif (isset($update['callback_query'])) {
+    $data = explode('_', $update['callback_query']['data']);
+    if ($data[0] === 'game') {
+        $gameId = $data[1];
+        $choice = $data[2];
+        
+        // منطق ثبت انتخاب و بررسی برنده
+        $gameHandler->handleChoice($gameId, $userId, $choice, $isPlayer1 = true);
+        $winner = $gameHandler->checkWinner($gameId);
+        
+        // ارسال نتیجه
+        if ($winner) {
+            // منطق پرداخت
+            sendMessage($chatId, "🏆 برنده شدید! عدد برنده: $winningNumber");
+        } else {
+            sendMessage($chatId, "❌ هیچ برنده‌ای وجود نداشت. عدد برنده: $winningNumber");
+        }
+    }
+}
 GOTOSTART:
 if ($userInfo['step'] == "banned" && $from_id != $admin && $userInfo['isAdmin'] != true) {
     sendMessage($mainValues['banned']);
