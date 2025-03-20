@@ -1,6 +1,3 @@
-<?php
-require_once 'config.php';
-
 class GameHandler {
     private $conn;
     
@@ -42,4 +39,3 @@ class GameHandler {
         return null;
     }
 }
-?>
