@@ -1205,6 +1205,20 @@ function getBotSettingKeys(){
             ['text'=>$configLink,'callback_data'=>"changeBotconfigLinkState"],
             ['text'=>"لینک کانفیگ",'callback_data'=>"wizwizch"]
         ],
+		    // ... کدهای قبلی
+[
+    ['text'=>$robotState,'callback_data'=>"changeBotbotState"],
+    ['text'=>"وضعیت ربات",'callback_data'=>"wizwizch"]
+],
+// ▼ این بخش جدید را اضافه کنید ▼
+[
+    ['text'=> $gameState, 'callback_data'=>"changeBotGameState"],
+    ['text'=>"فعالسازی بازی",'callback_data'=>"wizwizch"]
+],
+// ▲ پایان بخش جدید ▲
+[
+    ['text'=>$subLink,'callback_data'=>"changeBotsubLinkState"],
+// ... بقیه کدها   
         [
             ['text'=>$searchState,'callback_data'=>"changeBotsearchState"],
             ['text'=>"مشخصات کانفیگ",'callback_data'=>"wizwizch"]
