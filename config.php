@@ -9,8 +9,7 @@ if($connection->connect_error){
 }
 }
 $connection->set_charset("utf8mb4");
-<?php
-// config.php
+
 
 // اتصال به دیتابیس
 $host = 'localhost';
@@ -26,8 +25,7 @@ try {
 }
 
 // اینجا کلاس GameHandler اضافه خواهد شد
-<?php
-// config.php
+
 
 // اتصال به دیتابیس
 $host = 'localhost';
