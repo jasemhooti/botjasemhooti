@@ -347,9 +347,9 @@ if(!is_null($paymentKeys)) $paymentKeys = json_decode($paymentKeys,true);
 else $paymentKeys = array();
 $stmt->close();
 
-$stmt = $connection->prepare("SELECT * FROM `setting` WHERE `type` = 'BOT_STATES'");
+$stmt = $conn->prepare("SELECT * FROM bot_settings WHERE id = 1");
 $stmt->execute();
-$botState = $stmt->get_result()->fetch_assoc()['value'];
+$botState = $stmt->fetch(PDO::FETCH_ASSOC);
 $gameState = ($botState['game_feature'] ?? 'off') === 'on' ? '✅' : '❌';
 $stmt = $conn->prepare("SELECT * FROM bot_settings WHERE id = 1");
 $stmt->execute();
