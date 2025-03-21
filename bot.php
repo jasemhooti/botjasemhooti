@@ -4,11 +4,10 @@ check();
 
 $robotState = $botState['botState']??"on";
 // در بخش تنظیمات اولیه
-require_once 'game.php';
 $gameHandler = new GameHandler($conn);
 
 // دستور شروع بازی
-if (strpos($message, '/tartgame') === 0) {
+if (strpos($message, '/startgame') === 0) {
     $minimumBet = 500;
     sendMessage($chatId, "💰 لطفا مبلغ شرط را وارد کنید (حداقل $minimumBet تومان):");
     // ذخیره وضعیت کاربر در سشن
