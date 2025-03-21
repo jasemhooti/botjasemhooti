@@ -1,5 +1,4 @@
 <?php
-// game.php
 require_once 'config.php';
 
 // استفاده از کلاس
