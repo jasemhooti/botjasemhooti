@@ -350,9 +350,19 @@ $stmt->close();
 $stmt = $connection->prepare("SELECT * FROM `setting` WHERE `type` = 'BOT_STATES'");
 $stmt->execute();
 $botState = $stmt->get_result()->fetch_assoc()['value'];
+$gameState = ($botState['game_feature'] ?? 'off') === 'on' ? '✅' : '❌';
+$stmt = $conn->prepare("SELECT * FROM bot_settings WHERE id = 1");
+$stmt->execute();
+$botState = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// سایر متغیرها
+$updateConnectionState = ($botState['update_connection'] ?? 'off') === 'on' ? '✅' : '❌';
+$agency = ($botState['agency_feature'] ?? 'off') === 'on' ? '✅' : '❌';
 if(!is_null($botState)) $botState = json_decode($botState,true);
 else $botState = array();
 $stmt->close();
+$gameState = ($botState['game_feature'] ?? 'off') === 'on' ? '✅' : '❌';
+ALTER TABLE bot_settings ADD COLUMN game_feature VARCHAR(3) DEFAULT 'off';
 
 $channelLock = $botState['lockChannel'];
 $joniedState= bot('getChatMember', ['chat_id' => $channelLock,'user_id' => $from_id])->result->status;
@@ -1181,6 +1191,10 @@ function getBotSettingKeys(){
             ['text'=>$requirePhone,'callback_data'=>"changeBotrequirePhone"],
             ['text'=>"تأیید شماره",'callback_data'=>"wizwizch"]
         ],
+        [
+    ['text'=> $gameState, 'callback_data'=>"changeBotGameState"],
+    ['text'=>"فعالسازی بازی",'callback_data'=>"wizwizch"]
+],
         [
             ['text'=>$requireIranPhone,'callback_data'=>"changeBotrequireIranPhone"],
             ['text'=>"تأیید شماره ایرانی",'callback_data'=>"wizwizch"]
