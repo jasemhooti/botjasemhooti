@@ -1,3 +1,10 @@
+<?php
+// game.php
+require_once 'config.php';
+
+// استفاده از کلاس
+$gameHandler = new GameHandler($conn);
+
 class GameHandler {
     private $conn;
     
