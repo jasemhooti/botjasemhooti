@@ -1193,6 +1193,10 @@ function getBotSettingKeys(){
             ['text'=>$robotState,'callback_data'=>"changeBotbotState"],
             ['text'=>"وضعیت ربات",'callback_data'=>"wizwizch"]
         ],
+	[
+    ['text'=> $gameState, 'callback_data'=>"changeBotGameState"],
+    ['text'=>"فعالسازی بازی",'callback_data'=>"wizwizch"]
+],	       
         [
             ['text'=>$subLink,'callback_data'=>"changeBotsubLinkState"],
             ['text'=>"لینک ساب و مشخصات وب",'callback_data'=>"wizwizch"]
