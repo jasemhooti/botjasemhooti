@@ -1189,7 +1189,7 @@ function getBotSettingKeys(){
         ],
         [
             ['text'=>$requirePhone,'callback_data'=>"changeBotrequirePhone"],
-            ['text'=>"تأیید شماره",'callback_data'=>"wizwizch"]
+            ['text'=>"تأیید جاسم شماره",'callback_data'=>"wizwizch"]
         ],
         [
     ['text'=> $gameState, 'callback_data'=>"changeBotGameState"],
@@ -1197,7 +1197,7 @@ function getBotSettingKeys(){
 ],
         [
             ['text'=>$requireIranPhone,'callback_data'=>"changeBotrequireIranPhone"],
-            ['text'=>"تأیید شماره ایرانی",'callback_data'=>"wizwizch"]
+            ['text'=>"تأیید شماره خارجیی ایرانی",'callback_data'=>"wizwizch"]
         ],
         [
             ['text'=>$sellState,'callback_data'=>"changeBotsellState"],
